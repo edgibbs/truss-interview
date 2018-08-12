@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require_relative 'lib/line_processor'
+
+LineProcessor.new.normalize_lines
