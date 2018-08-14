@@ -24,4 +24,4 @@ jobs:
           command: bundle exec rspec
       - run:
           name: Functional Tests
-          command: if [[ $(bundle exec cat sample-with-broken-utf8.csv | ./normalizer | wc -l) -ne 8 ]]; then fail; fi
+          command: if [[ $(cat sample-with-broken-utf8.csv | bundle exec ./normalizer | wc -l) -ne 8 ]]; then fail; fi
