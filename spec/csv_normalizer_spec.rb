@@ -20,6 +20,19 @@ describe CsvNormalizer do
           expect(csv_normalizer.normalize(row)).to eq row
         end
       end
+
+      context 'for an invalid timestamp' do
+        let(:row) { CSV::Row.new([:timestamp], ["2002 \uFFFD"]) }
+
+        it 'prints an error' do
+          expect(STDERR).to receive(:puts)
+          csv_normalizer.normalize(row)
+        end
+
+        it 'returns nil' do
+          expect(csv_normalizer.normalize(row)).to eq nil
+        end
+      end
     end
   end
 end

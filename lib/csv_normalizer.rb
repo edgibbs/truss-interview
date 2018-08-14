@@ -7,6 +7,8 @@ class CsvNormalizer
       convert_timestamp_to_iso_8601_eastern(row)
     end
     row
+  rescue => error
+    STDERR.puts error
   end
 
   private
