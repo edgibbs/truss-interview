@@ -6,7 +6,7 @@ describe CsvNormalizer do
   describe '#normalize' do
     context 'for the timestamp column' do
       context 'for a valid timestamp' do
-        let(:row) { CSV::Row.new([:timestamp, :zip], ['4/1/11 11:00:00:00 AM', '']) }
+        let(:row) { CSV::Row.new([:timestamp, :zip, :fullname], ['4/1/11 11:00:00:00 AM', '', '']) }
 
         it 'formats time in ISO-8601 and eastern time' do
           expect(csv_normalizer.normalize(row)[:timestamp]).to eq "2004-01-11T14:00:00-05:00"
@@ -37,7 +37,7 @@ describe CsvNormalizer do
 
     context 'for a zip code column' do
       context 'with less than 5 digits' do
-        let(:row) { CSV::Row.new([:timestamp, :zip], ['4/1/11 11:00:00:00 AM', '11']) }
+        let(:row) { CSV::Row.new([:timestamp, :zip, :fullname], ['4/1/11 11:00:00:00 AM', '11', '']) }
 
         it 'prepends with zeros' do
           expect(csv_normalizer.normalize(row)[:zip]).to eq '00011'
@@ -45,11 +45,19 @@ describe CsvNormalizer do
       end
 
       context 'with 5 digits' do
-        let(:row) { CSV::Row.new([:timestamp, :zip], ['4/1/11 11:00:00:00 AM', '12345']) }
+        let(:row) { CSV::Row.new([:timestamp, :zip, :fullname], ['4/1/11 11:00:00:00 AM', '12345', '']) }
 
         it 'prepends with zeros' do
           expect(csv_normalizer.normalize(row)[:zip]).to eq '12345'
         end
+      end
+    end
+
+    context 'for a full name colum' do
+      let(:row) { CSV::Row.new([:timestamp, :zip, :fullname], ['4/1/11 11:00:00:00 AM', '', 'George P Burdell']) }
+
+      it 'uppercases the name' do
+        expect(csv_normalizer.normalize(row)[:fullname]).to eq 'GEORGE P BURDELL'
       end
     end
   end

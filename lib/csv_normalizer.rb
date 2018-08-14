@@ -7,6 +7,7 @@ class CsvNormalizer
     unless row.header_row?
       convert_timestamp_to_iso_8601_eastern(row)
       convert_zip_codes_to_5_numbers(row)
+      upper_case_names(row)
     end
     row
   rescue => error
@@ -21,5 +22,9 @@ class CsvNormalizer
 
   def convert_zip_codes_to_5_numbers(row)
     row[:zip] = row[:zip].rjust(5, "0")
+  end
+
+  def upper_case_names(row)
+    row[:fullname] = row[:fullname].upcase
   end
 end
