@@ -3,7 +3,9 @@ require 'time'
 
 class CsvNormalizer
   def normalize(row)
-    convert_timestamp_to_iso_8601_eastern(row)
+    unless row.header_row?
+      convert_timestamp_to_iso_8601_eastern(row)
+    end
     row
   end
 

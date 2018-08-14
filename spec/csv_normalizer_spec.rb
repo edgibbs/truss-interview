@@ -12,6 +12,14 @@ describe CsvNormalizer do
           expect(csv_normalizer.normalize(row)[:timestamp]).to eq "2004-01-11T14:00:00-05:00"
         end
       end
+
+      context 'for a header row' do
+        let(:row) { CSV::Row.new([:timestamp], ['4/1/11 11:00:00:00 AM'], true) }
+
+        it 'returns the row unmodified' do
+          expect(csv_normalizer.normalize(row)).to eq row
+        end
+      end
     end
   end
 end

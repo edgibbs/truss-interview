@@ -2,8 +2,15 @@ require_relative '../lib/line_processor'
 
 describe LineProcessor do
   describe '#normalize_lines' do
+    let(:csv_normalizer) { instance_double('CsvNormalizer') }
+
+    before do
+      allow(CsvNormalizer).to receive(:new).with(no_args).and_return(csv_normalizer)
+      allow(csv_normalizer).to receive(:normalize) { |row| row }
+    end
+
     context 'when UTF-8 string is provided' do
-      let(:input) { StringIO.new('LINE\nline 1\nline 2') }
+      let(:input) { StringIO.new("Timestamp\n1/1/2001\n1/1/2002") }
 
       it 'returns UTF-8' do
         line_processor = LineProcessor.new(input.set_encoding(Encoding::UTF_8))
