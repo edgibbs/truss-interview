@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/edgibbs/truss-interview.svg?style=svg)](https://circleci.com/gh/edgibbs/truss-interview)
 _This is one of the steps in the Truss interview process. If you've
 stumbled upon this repository and are interested in a career with
 Truss, [check out our jobs page](https://truss.works/jobs)._
