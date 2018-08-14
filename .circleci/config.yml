@@ -15,10 +15,10 @@ jobs:
           name: Bundle Install
           command: bundle check || bundle install
 
-      # - save_cache:
-      #     key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-      #     paths:
-      #       - vendor/bundle
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
           name: Unit Tests
           command: bundle exec rspec
