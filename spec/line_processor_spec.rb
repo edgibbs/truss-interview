@@ -33,6 +33,15 @@ describe LineProcessor do
       end
     end
 
+    context 'when CsvNormalizer fails to process rows and returns nil' do
+      let(:input) { StringIO.new("LINE\nskipped\nline 2") }
+
+      it 'skips rows in output' do
+        allow(csv_normalizer).to receive(:normalize) { |row| row.to_s =~ /skipped/ ? nil : row }
+        expect(LineProcessor.new(input).normalize_lines).to eq "LINE\nline 2\n"
+      end
+    end
+
     context 'when there are 2 lines with a header' do
       let(:input) { StringIO.new("LINE\nline 1\nline 2") }
 

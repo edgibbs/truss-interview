@@ -10,7 +10,8 @@ class LineProcessor
     updated_csv = []
     utf8_input = encode_to_utf8(@standard_in.readlines.join(''))
     CSV.parse(utf8_input, headers: true, header_converters: :symbol, return_headers: true) do |row|
-      updated_csv << CsvNormalizer.new.normalize(row)
+      normalized_row = CsvNormalizer.new.normalize(row)
+      updated_csv << normalized_row if normalized_row
     end
     CSV.generate("") do |csv|
       updated_csv.each do |row|
