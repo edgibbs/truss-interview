@@ -22,6 +22,6 @@ class LineProcessor
   private
 
   def encode_to_utf8(string)
-    string.encode("UTF-8", { :invalid => :replace, :undef => :replace, :replace => "x" })
+    string.encode("UTF-8", { :invalid => :replace, :undef => :replace, :replace => "\uFFFD" })
   end
 end

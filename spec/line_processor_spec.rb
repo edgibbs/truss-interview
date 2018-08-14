@@ -26,6 +26,11 @@ describe LineProcessor do
         line_processor = LineProcessor.new(input.set_encoding(Encoding::UTF_8))
         expect(line_processor.normalize_lines.encoding).to eq Encoding::UTF_8
       end
+
+      it 'replaces with unicode replacement character' do
+        line_processor = LineProcessor.new(input.set_encoding(Encoding::UTF_8))
+        expect(line_processor.normalize_lines).to eq "LINE\nline 1\n\uFFFD\n"
+      end
     end
 
     context 'when there are 2 lines with a header' do
